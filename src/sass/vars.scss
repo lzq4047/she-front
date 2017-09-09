@@ -1,0 +1,18 @@
+@import "theme.scss";
+
+$color-amount-lighten: 10%;
+$color-amount-darken: 10%;
+
+$color-border: $color-note;
+
+$border: 1px solid $color-border;
+
+// Button
+$button-font-color: $color-white;
+$button-plain-font-color: $color-font;
+
+$button-padding: 8px 15px;
+$button-small-padding: 5px 10px;
+
+$button-border-radius: 4px;
+$button-small-border-radius: 2px;
