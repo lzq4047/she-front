@@ -1,5 +1,5 @@
 <template>
-  <button class="she-button" :class="clazz" v-on="$listeners">
+  <button class="she-button" :class="clazz" @click.prevent="e => $emit('click', e)">
     <slot></slot>
   </button>
 </template>
@@ -9,14 +9,19 @@
     name: 'she-button',
     component: 'button',
     props: {
-      type: String
+      type: String,
+      size: String,
+      block: Boolean,
+      ellipse: Boolean
     },
     computed: {
       clazz: function () {
-        const { type, size } = this
+        const { type, size, block, ellipse } = this
         return {
-          [`she-button__${type}`]: type,
-          [`she-button__${size}`]: size
+          [`she-button--${type}`]: type,
+          [`she-button--${size}`]: size,
+          [`she-button--block`]: block,
+          [`she-button--ellipse`]: ellipse
         }
       }
     }
@@ -25,34 +30,44 @@
 
 <style lang="scss">
 @import "../../../sass/vars.scss";
+@import "../../../sass/mixins.scss";
 .she-button {
   padding: $button-padding;
   border: $border;
   border-radius: $button-border-radius;
   background-color: transparent;
-  transition: background-color .3s ease-out,border-color .3s ease-out,color .3s ease-out;
+  cursor: pointer;
+  @include transition(background-color border-color color, ease-out);
+  
   &:focus {
     outline: none;
   }
 }
-.she-button__primary {
+.she-button--primary {
   background-color: $primary;
   border-color: $primary;
   color: $button-font-color;
   &:hover{
     background-color: lighten($primary, $color-amount-lighten);
     border-color: lighten($primary, $color-amount-lighten);
-    transition: background-color .3s ease-in,border-color .3s ease-in,color .3s ease-in;
+    @include transition(background-color border-color color, ease-in);
   }
   &:active{
     background-color: darken($primary, $color-amount-darken);
     border-color: darken($primary, $color-amount-darken);
-    transition: background-color .3s ease-in,border-color .3s ease-in,color .3s ease-in;
+    @include transition(background-color border-color color, ease-in);
   }
 }
-.she-button__small {
+.she-button--small {
   padding: $button-small-padding;
   border-radius: $button-small-border-radius;
+}
+.she-button--block{
+  display: block;
+  width: 100%;
+}
+.she-button--ellipse{
+  border-radius: 36px;
 }
 </style>
 
