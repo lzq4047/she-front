@@ -1,33 +1,27 @@
 <template>
   <div id="app">
-    <she-button @click="request" type="primary">Login</she-button>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import axios from 'axios'
-
-import SheButton from 'components/common/button/Button'
 export default {
-  name: 'app',
-  methods: {
-    ...mapActions(['login']),
-    request: function () {
-      axios.get('/api/cat/hello/123').then(res => {
-        console.log(res)
-      }).catch(err => {
-        console.warn(err)
-      })
-    }
-  },
-  components: {
-    SheButton
-  }
+  name: 'app'
 }
 </script>
 
 <style lang="scss">
-  @import "../node_modules/minireset.css/minireset.css"
+  @import "../node_modules/minireset.css/minireset.css";
+  @import "./sass/theme.scss";
+  html, body{
+    height: 100%;
+  }
+  #app {
+    height: 100%;
+
+    font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
+    font-size: 14px;
+    color: $color-font;
+  }
 </style>
 

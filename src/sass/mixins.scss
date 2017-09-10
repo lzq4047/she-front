@@ -1,0 +1,15 @@
+@mixin border($width: 1px, $style: solid, $color: $color-border) {
+  border: {
+    width: $width;
+    style: $type;
+    color: $color;
+  }
+}
+
+@mixin transition($properties, $function: ease-in-out, $duration: 0.3s) {
+  transition: {
+    property: $properties;
+    duration: $duration;
+    timing-function: $function;
+  }
+}
