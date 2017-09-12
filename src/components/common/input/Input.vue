@@ -4,6 +4,7 @@
       <slot name="prepend"></slot>
     </div>
     <input 
+      v-bind="$attrs"
       :value="value" 
       :type="type" 
       class="she-input__inner" 

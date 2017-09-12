@@ -13,3 +13,34 @@
     timing-function: $function;
   }
 }
+
+@mixin button-theme($background-color, $border-color, $color) {
+  background-color: $background-color;
+  border-color: $border-color;
+  color: $button-font-color;
+  &:hover{
+    background-color: lighten($background-color, $color-amount-lighten);
+    border-color: lighten($border-color, $color-amount-lighten);
+    @include transition(background-color border-color color, ease-in);
+  }
+  &:active{
+    background-color: darken($background-color, $color-amount-darken);
+    border-color: darken($border-color, $color-amount-darken);
+    @include transition(background-color border-color color, ease-in);
+  }
+  &.she-button--text {
+    background-color: transparent;
+    border-color: transparent;
+    color: $background-color;
+    &:hover{
+      background-color: transparent;
+      border-color: transparent;
+      color: lighten($background-color, $color-amount-lighten);
+    }
+    &:active{
+      background-color: transparent;
+      border-color: transparent;
+      color: darken($background-color, $color-amount-darken);
+    }
+  }
+}

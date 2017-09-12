@@ -7,17 +7,35 @@
       <div class="login-box-body">
         <she-form>
           <she-form-item>
-            <she-input v-model="loginForm.username" plain ellipse>
+            <she-input v-model="loginForm.username" plain ellipse placeholder="用户名">
               <span class="iconfont icon-username" slot="prepend"></span>
             </she-input>
           </she-form-item>
           <she-form-item>
-            <she-input v-model="loginForm.password" type="password" plain ellipse>
+            <she-input v-model="loginForm.password" type="password" plain ellipse placeholder="密码">
               <span class="iconfont icon-password" slot="prepend"></span>
             </she-input>
           </she-form-item>
           <she-form-item>
+            <div class="validate-field">
+              <she-input class="validate-field__input" v-model="loginForm.password" type="password" plain ellipse placeholder="验证码">
+                <span class="iconfont icon-validate-code" slot="prepend"></span>
+              </she-input>
+              <img class="validate-field__code" src="./validate-code.jpg" alt="">
+            </div>
+          </she-form-item>
+          <she-form-item>
             <she-button @click="login" type="primary" block ellipse>Login</she-button>
+          </she-form-item>
+          <she-form-item>
+            <p class="account-operations">
+              <she-button type="primary" text>
+                <router-link :to="{name: 'register'}" tag="span">注册</router-link>
+              </she-button>
+              <she-button type="primary" text link>
+                <router-link :to="{name: 'appeal'}" tag="span">忘记密码？找回</router-link>
+              </she-button>
+            </p>
           </she-form-item>
         </she-form>
       </div>
@@ -31,7 +49,7 @@ import SheButton from 'components/common/button/Button'
 import SheForm from 'components/common/form/Form'
 import SheFormItem from 'components/common/form/FormItem'
 
-import particlesJS from 'particles.js'
+import 'particles.js'
 export default {
   name: 'login',
   data: function () {
@@ -55,8 +73,7 @@ export default {
     SheButton
   },
   mounted: function () {
-    console.log(particlesJS)
-    window.particlesJS.load('particles-js', './static/particlesjs-config.json', function () {
+    window.particlesJS.load('particles-js', 'static/particlesjs-config.json', function () {
       console.log('callback - particles.js config loaded')
     })
   }
@@ -71,7 +88,7 @@ export default {
   justify-content: center;
   align-items: center;
 
-  background: url('../../assets/login-bg.jpg') center center;
+  background: url('./login-bg.jpg') center center;
   background-size: 100% auto;
 }
 .login-box{
@@ -95,6 +112,22 @@ export default {
 }
 .login-box-body{
   padding: 20px;
+}
+.validate-field{
+  display: flex;
+  align-items: center;
+}
+.validate-field__input{
+  flex: 1;
+  margin-right: 15px;
+}
+.validate-field__code{
+  width: 100px;
+  max-height: 36px;
+}
+.account-operations{
+  width: 100%;
+  text-align: right;
 }
 </style>
 
