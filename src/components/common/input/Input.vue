@@ -11,7 +11,7 @@
       :autocomplete="autocomplete" 
       @focus="handleFocus" 
       @blur="handleBlur" 
-      @input="e => this.$emit('input', e.target.value)"> 
+      @input="$emit('input', $event.target.value)"> 
     <div class="she-input__append" v-if="$slots.append">
       <slot name="append"></slot>
     </div>

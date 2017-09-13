@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Login from 'pages/login/Login'
 import Register from 'pages/register/Register'
 import Index from 'pages/index/Index'
+import Appeal from 'pages/appeal/Appeal'
 
 Vue.use(Router)
 
@@ -33,6 +34,15 @@ const router = new Router({
       component: Register,
       meta: {
         title: '注册-校园二手书交易',
+        requireAuth: false
+      }
+    },
+    {
+      path: '/appeal',
+      name: 'appeal',
+      component: Appeal,
+      meta: {
+        title: '找回密码-校园二手书交易',
         requireAuth: false
       }
     },

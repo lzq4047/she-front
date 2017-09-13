@@ -18,7 +18,7 @@
           </she-form-item>
           <she-form-item>
             <div class="validate-field">
-              <she-input class="validate-field__input" v-model="loginForm.password" type="password" plain ellipse placeholder="验证码">
+              <she-input class="validate-field__input" v-model="loginForm.validateCode" plain ellipse placeholder="验证码">
                 <span class="iconfont icon-validate-code" slot="prepend"></span>
               </she-input>
               <img class="validate-field__code" src="./validate-code.jpg" alt="">
@@ -55,15 +55,28 @@ export default {
   data: function () {
     return {
       loginForm: {
-        username: '',
-        password: '',
+        username: 'test',
+        password: '12345678',
         validateCode: ''
       }
     }
   },
   methods: {
-    login: function () {
-      console.log('login')
+    login: async function () {
+      const valid = await this.checkValidateCode()
+      if (valid) {
+        this.$http.post('/api/login', {
+          username: this.loginForm.username,
+          password: this.loginForm.password
+        }).then(res => {
+          console.log(res)
+        }).catch(err => {
+          console.error(err)
+        })
+      }
+    },
+    checkValidateCode: function () {
+      return true
     }
   },
   components: {
