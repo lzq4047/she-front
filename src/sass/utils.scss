@@ -1,0 +1,19 @@
+.justify-end{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.justify-start{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+.justify-center{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.align-center{
+  display: flex;
+  align-items: center;
+}

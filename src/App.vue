@@ -13,6 +13,7 @@ export default {
 <style lang="scss">
   @import "../node_modules/minireset.css/minireset.css";
   @import "./sass/theme.scss";
+  @import "./sass/utils.scss";
   html, body{
     height: 100%;
   }

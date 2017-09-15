@@ -19,8 +19,9 @@
 </template>
 
 <script>
+import { ComponentPrefix } from '@/config'
 export default {
-  name: 'she-input',
+  name: `${ComponentPrefix}-input`,
   componentName: 'input',
   data: function () {
     return {

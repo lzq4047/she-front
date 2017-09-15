@@ -5,31 +5,32 @@
 </template>
 
 <script>
-  export default {
-    name: 'she-button',
-    component: 'button',
-    props: {
-      type: String,
-      size: String,
-      block: Boolean,
-      ellipse: Boolean,
-      text: Boolean,
-      link: Boolean
-    },
-    computed: {
-      clazz: function () {
-        const { type, size, block, ellipse, text, link } = this
-        return {
-          [`she-button--${type}`]: type,
-          [`she-button--${size}`]: size,
-          [`she-button--block`]: block,
-          [`she-button--ellipse`]: ellipse,
-          [`she-button--text`]: text,
-          [`she-button--link`]: link
-        }
+import { ComponentPrefix } from '@/config'
+export default {
+  name: `${ComponentPrefix}-button`,
+  component: 'button',
+  props: {
+    type: String,
+    size: String,
+    block: Boolean,
+    ellipse: Boolean,
+    text: Boolean,
+    link: Boolean
+  },
+  computed: {
+    clazz: function () {
+      const { type, size, block, ellipse, text, link } = this
+      return {
+        [`she-button--${type}`]: type,
+        [`she-button--${size}`]: size,
+        [`she-button--block`]: block,
+        [`she-button--ellipse`]: ellipse,
+        [`she-button--text`]: text,
+        [`she-button--link`]: link
       }
     }
   }
+}
 </script>
 
 <style lang="scss">

@@ -5,8 +5,9 @@
 </template>
 
 <script>
+import { ComponentPrefix } from '@/config'
 export default {
-  name: 'she-form',
+  name: `${ComponentPrefix}-form`,
   componentName: 'form',
   props: {
     labelWidth: String,

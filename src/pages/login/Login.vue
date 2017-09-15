@@ -1,5 +1,8 @@
 <template>
   <div class="login" id="particles-js">
+    <div class="logo">
+      <img src="../../assets/logo-she.png" width="100px" alt="校园二手书线下交易平台">
+    </div>
     <div class="login-box">
       <div class="login-box-header">
         <h2 class="login-box__title">欢迎你</h2>
@@ -18,7 +21,7 @@
           </she-form-item>
           <she-form-item>
             <div class="validate-field">
-              <she-input class="validate-field__input" v-model="loginForm.validateCode" plain ellipse placeholder="验证码">
+              <she-input class="validate-field__input" v-model="validateCode" plain ellipse placeholder="验证码">
                 <span class="iconfont icon-validate-code" slot="prepend"></span>
               </she-input>
               <img class="validate-field__code" src="./validate-code.jpg" alt="">
@@ -44,32 +47,32 @@
 </template>
 
 <script>
-import SheInput from 'components/common/input/Input'
-import SheButton from 'components/common/button/Button'
-import SheForm from 'components/common/form/Form'
-import SheFormItem from 'components/common/form/FormItem'
-
 import 'particles.js'
 export default {
   name: 'login',
   data: function () {
     return {
       loginForm: {
-        username: 'test',
-        password: '12345678',
-        validateCode: ''
-      }
+        username: '',
+        password: ''
+      },
+      validateCode: ''
     }
   },
   methods: {
     login: async function () {
       const valid = await this.checkValidateCode()
       if (valid) {
-        this.$http.post('/api/login', {
+        this.$http.post('/api/user/login', {
           username: this.loginForm.username,
           password: this.loginForm.password
         }).then(res => {
-          console.log(res)
+          console.log(res.data)
+          if (res.data.code === '0') {
+            this.$router.push({
+              name: 'index'
+            })
+          }
         }).catch(err => {
           console.error(err)
         })
@@ -79,11 +82,12 @@ export default {
       return true
     }
   },
-  components: {
-    SheInput,
-    SheForm,
-    SheFormItem,
-    SheButton
+  created: function () {
+    this.$http.post('/api/user/checkname/wang').then((res) => {
+      console.log(res.data)
+    }).catch((err) => {
+      console.error(err)
+    })
   },
   mounted: function () {
     window.particlesJS.load('particles-js', 'static/particlesjs-config.json', function () {
@@ -95,6 +99,11 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../sass/theme.scss";
+.logo{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
 .login{
   height: 100%;
   display: flex;

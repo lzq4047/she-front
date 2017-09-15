@@ -12,8 +12,9 @@
 </template>
 
 <script>
+import { ComponentPrefix } from '@/config'
 export default {
-  name: 'she-form-item',
+  name: `${ComponentPrefix}-form-item`,
   componentName: 'form-item',
   props: {
     label: String,
