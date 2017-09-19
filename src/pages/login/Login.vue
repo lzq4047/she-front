@@ -24,7 +24,7 @@
               <she-input class="validate-field__input" v-model="validateCode" plain ellipse placeholder="验证码">
                 <span class="iconfont icon-validate-code" slot="prepend"></span>
               </she-input>
-              <img class="validate-field__code" src="./validate-code.jpg" alt="">
+              <img ref="validateFieldImg" class="validate-field__code" src="/api/user/varifycode" alt="点击切换验证码" @click="changeCode">
             </div>
           </she-form-item>
           <she-form-item>
@@ -48,6 +48,7 @@
 
 <script>
 import 'particles.js'
+import SHA256 from 'crypto-js/sha256'
 export default {
   name: 'login',
   data: function () {
@@ -63,12 +64,12 @@ export default {
     login: async function () {
       const valid = await this.checkValidateCode()
       if (valid) {
-        this.$http.post('/api/user/login', {
-          username: this.loginForm.username,
-          password: this.loginForm.password
-        }).then(res => {
+        this.$http.post('/api/user/login', Object.assign({}, this.loginForm, {
+          password: SHA256(this.loginForm.password).toString()
+        })).then(res => {
           console.log(res.data)
           if (res.data.code === '0') {
+            localStorage.setItem('SHE_TOKEN', res.data.data)
             this.$router.push({
               name: 'index'
             })
@@ -80,14 +81,22 @@ export default {
     },
     checkValidateCode: function () {
       return true
+    },
+    changeCode: function () {
+      this.$refs.validateFieldImg.setAttribute('src', `/api/user/varifycode?${(new Date().getTime())}`)
     }
   },
   created: function () {
-    this.$http.post('/api/user/checkname/wang').then((res) => {
+    this.$http.post('/api/user/checkname/wang').then(res => {
       console.log(res.data)
     }).catch((err) => {
       console.error(err)
     })
+    // this.$http.get('/api/user/varifycode').then(res => {
+    //   console.log(res.data)
+    // }).catch(err => {
+    //   console.error(err)
+    // })
   },
   mounted: function () {
     window.particlesJS.load('particles-js', 'static/particlesjs-config.json', function () {
