@@ -15,18 +15,20 @@ export default {
     block: Boolean,
     ellipse: Boolean,
     text: Boolean,
-    link: Boolean
+    link: Boolean,
+    disabled: Boolean
   },
   computed: {
     clazz: function () {
-      const { type, size, block, ellipse, text, link } = this
+      const { type, size, block, ellipse, text, link, disabled } = this
       return {
         [`she-button--${type}`]: type,
         [`she-button--${size}`]: size,
         [`she-button--block`]: block,
         [`she-button--ellipse`]: ellipse,
         [`she-button--text`]: text,
-        [`she-button--link`]: link
+        [`she-button--link`]: link,
+        [`she-button--disabled`]: disabled
       }
     }
   }
