@@ -42,6 +42,7 @@ export default class Validator {
     }
   }
   start () {
+    debugger
     for (let validateFunc of this.cache) {
       let errorMsg = validateFunc()
       if (errorMsg) {

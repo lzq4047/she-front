@@ -11,7 +11,7 @@
       :autocomplete="autocomplete" 
       @focus="handleFocus" 
       @blur="handleBlur" 
-      @input="$emit('input', $event.target.value)"> 
+      @input="handleInput"> 
     <div class="she-input__append" v-if="$slots.append">
       <slot name="append"></slot>
     </div>
@@ -20,9 +20,11 @@
 
 <script>
 import { ComponentPrefix } from '@/config'
+import events from '@/utils/events.js'
 export default {
   name: `${ComponentPrefix}-input`,
   componentName: 'input',
+  mixins: [events],
   data: function () {
     return {
       isFocus: false
@@ -52,13 +54,19 @@ export default {
     }
   },
   methods: {
+    handleInput: function (e) {
+      this.$emit('input', e.target.value)
+      this.emitEvent('form-item', 'input', e)
+    },
     handleFocus: function (e) {
       this.$emit('focus', e)
       this.isFocus = true
+      this.emitEvent('form-item', 'focus', e)
     },
     handleBlur: function (e) {
       this.$emit('blur', e)
       this.isFocus = false
+      this.emitEvent('form-item', 'blur', e)
     }
   }
 }

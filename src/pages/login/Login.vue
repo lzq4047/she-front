@@ -9,7 +9,7 @@
       </div>
       <div class="login-box-body">
         <she-form>
-          <she-form-item>
+          <she-form-item :rules="[{strategy: 'isRequired', message: '请输入用户名', trigger: 'blur'}]" prop="username">
             <she-input v-model="loginForm.username" plain ellipse placeholder="用户名">
               <span class="iconfont icon-username" slot="prepend"></span>
             </she-input>
@@ -24,7 +24,7 @@
               <she-input class="validate-field__input" v-model="validateCode" plain ellipse placeholder="验证码">
                 <span class="iconfont icon-validate-code" slot="prepend"></span>
               </she-input>
-              <img ref="validateFieldImg" class="validate-field__code" src="/api/user/varifycode" alt="点击切换验证码" @click="changeCode">
+              <img ref="validateFieldImg" class="validate-field__code" src="/api/verifyCode" alt="点击切换验证码" @click="changeCode">
             </div>
           </she-form-item>
           <she-form-item>
@@ -64,39 +64,40 @@ export default {
     login: async function () {
       const valid = await this.checkValidateCode()
       if (valid) {
-        this.$http.post('/api/user/login', Object.assign({}, this.loginForm, {
+        this.$http.post('/api/session', Object.assign({}, this.loginForm, {
           password: SHA256(this.loginForm.password).toString()
         })).then(res => {
-          console.log(res.data)
           if (res.data.code === '0') {
-            localStorage.setItem('SHE_TOKEN', res.data.data)
+            localStorage.setItem('SHE_TOKEN', res.data.data.authorization)
             this.$router.push({
               name: 'index'
             })
+          } else {
+            console.log('用户名或密码不正确')
           }
         }).catch(err => {
           console.error(err)
         })
+      } else {
+        console.log('验证码错误')
+        this.changeCode()
       }
     },
     checkValidateCode: function () {
-      return true
+      return new Promise((resolve, reject) => {
+        this.$http.post(`/api/checkImg/${this.validateCode}`).then(res => {
+          resolve(res.data.data)
+        }).catch(err => {
+          console.error(err)
+          reject(false)
+        })
+      })
     },
     changeCode: function () {
-      this.$refs.validateFieldImg.setAttribute('src', `/api/user/varifycode?${(new Date().getTime())}`)
+      this.$refs.validateFieldImg.setAttribute('src', `/api/verifyCode?${(new Date().getTime())}`)
     }
   },
   created: function () {
-    this.$http.post('/api/user/checkname/wang').then(res => {
-      console.log(res.data)
-    }).catch((err) => {
-      console.error(err)
-    })
-    // this.$http.get('/api/user/varifycode').then(res => {
-    //   console.log(res.data)
-    // }).catch(err => {
-    //   console.error(err)
-    // })
   },
   mounted: function () {
     window.particlesJS.load('particles-js', 'static/particlesjs-config.json', function () {

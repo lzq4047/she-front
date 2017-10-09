@@ -10,8 +10,15 @@ export default {
   name: `${ComponentPrefix}-form`,
   componentName: 'form',
   props: {
+    model: Object,
     labelWidth: String,
-    labelAlign: String
+    labelAlign: String,
+    rules: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    }
   }
 }
 </script>

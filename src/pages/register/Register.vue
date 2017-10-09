@@ -33,7 +33,7 @@
               <she-input class="validate-field__input" v-model="validateCode" placeholder="验证码">
                 <span class="iconfont icon-validate-code" slot="prepend"></span>
               </she-input>
-              <img ref="validateFieldImg" src="/api/user/varifycode" alt="点击切换验证码" @click="changeCode">
+              <img ref="validateFieldImg" src="/api/verifyCode" alt="点击切换验证码" @click="changeCode">
             </div>
           </she-form-item>
           <she-form-item>
@@ -69,12 +69,13 @@ export default {
         qqNum: '',
         school: ''
       },
+      validateCode: '',
       acceptDeal: false
     }
   },
   methods: {
     register: function () {
-      this.$http.post('/api/user/register', Object.assign({}, this.registerForm, {
+      this.$http.post('/api/user', Object.assign({}, this.registerForm, {
         password: SHA256(this.registerForm.password).toString()
       })).then(res => {
         if (res.data.code === '200') {
@@ -86,7 +87,7 @@ export default {
       })
     },
     changeCode: function () {
-      this.$refs.validateFieldImg.setAttribute('src', `/api/user/varifycode?${(new Date().getTime())}`)
+      this.$refs.validateFieldImg.setAttribute('src', `/api/verifyCode?${(new Date().getTime())}`)
     }
   }
 }
